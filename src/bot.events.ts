@@ -4,6 +4,7 @@ import { Message } from 'discord.js';
 export class BotEvents {
     private _prefix = '!';
     private _bot: Client;
+    private _channel : string;
 
     constructor(bot: Client) {
         this._bot = bot;
@@ -13,9 +14,26 @@ export class BotEvents {
         console.log('This bot is online');
     };
 
-    public message = async (msg: Message) => { 
+    public message = async (msg: Message) => {
         if (msg.author.bot) return;
         if (!msg.content.startsWith(this._prefix)) return;
+
+
+        if (msg.content.startsWith(`${this._prefix}id`)) { 
+            this._channel = msg.content.slice(this._prefix.length).split(/ +/)[1];
+            return;
+        }
+
+        if(!this._channel) {
+            msg.channel.send(
+                "You need to specify a chat channel id. use '!id'"
+            );
+            return;
+        }
+
+        if(msg.channel.id != this._channel) {
+            return;
+        }
 
         if (msg.content.startsWith(`${this._prefix}m`) || msg.content.startsWith(`${this._prefix}u`)) {
             const voiceChannel = msg.member.voice.channel;

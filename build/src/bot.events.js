@@ -13,7 +13,18 @@ class BotEvents {
                 return;
             if (!msg.content.startsWith(this._prefix))
                 return;
-            if (msg.content.startsWith(`${this._prefix}mute`) || msg.content.startsWith(`${this._prefix}unmute`)) {
+            if (msg.content.startsWith(`${this._prefix}id`)) {
+                this._channel = msg.content.slice(this._prefix.length).split(/ +/)[1];
+                return;
+            }
+            if (!this._channel) {
+                msg.channel.send("You need to specify a chat channel id. use '!id'");
+                return;
+            }
+            if (msg.channel.id != this._channel) {
+                return;
+            }
+            if (msg.content.startsWith(`${this._prefix}m`) || msg.content.startsWith(`${this._prefix}u`)) {
                 const voiceChannel = msg.member.voice.channel;
                 if (!voiceChannel) {
                     msg.channel.send("You need to be in a voice channel!");
@@ -24,7 +35,7 @@ class BotEvents {
                     msg.channel.send("I need the permissions to join and speak in your voice channel!");
                     return;
                 }
-                if (msg.content.startsWith(`${this._prefix}mute`)) {
+                if (msg.content.startsWith(`${this._prefix}m`)) {
                     voiceChannel.members.forEach(m => m.voice.setMute(true, 'shhhh'));
                 }
                 else {
