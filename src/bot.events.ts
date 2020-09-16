@@ -17,7 +17,7 @@ export class BotEvents {
         if (msg.author.bot) return;
         if (!msg.content.startsWith(this._prefix)) return;
 
-        if (msg.content.startsWith(`${this._prefix}muteall`) || msg.content.startsWith(`${this._prefix}unmuteall`)) {
+        if (msg.content.startsWith(`${this._prefix}m`) || msg.content.startsWith(`${this._prefix}u`)) {
             const voiceChannel = msg.member.voice.channel;
             if (!voiceChannel)
             {
@@ -34,7 +34,7 @@ export class BotEvents {
               return;
             }
 
-            if(msg.content.startsWith(`${this._prefix}muteall`)) {
+            if(msg.content.startsWith(`${this._prefix}m`)) {
                 voiceChannel.members.forEach(
                     m => m.voice.setMute(true, 'shhhh')
                 )  
