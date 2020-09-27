@@ -23,7 +23,7 @@ export class BotEvents {
             return;
         }
 
-        if(process.env.DEFAULT_CHANNELS.split(',').includes(msg.channed.id)) {
+        if(process.env.DEFAULT_CHANNELS.split(',').includes(msg.channel.id)) {
             this._channel=msg.channed.id;
         }
 
