@@ -5,7 +5,7 @@ export class BotEvents {
     private _prefix = '!';
     private _bot: Client;
     private _channel : string;
-
+    
     constructor(bot: Client) {
         this._bot = bot;
     }
@@ -18,10 +18,13 @@ export class BotEvents {
         if (msg.author.bot) return;
         if (!msg.content.startsWith(this._prefix)) return;
 
-
         if (msg.content.startsWith(`${this._prefix}id`)) { 
             this._channel = msg.content.slice(this._prefix.length).split(/ +/)[1];
             return;
+        }
+
+        if(process.env.DEFAULT_CHANNELS.split(',').includes(msg.channed.id)) {
+            this._channel=msg.channed.id;
         }
 
         if(!this._channel) {
