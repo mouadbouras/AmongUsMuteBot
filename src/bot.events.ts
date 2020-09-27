@@ -18,13 +18,13 @@ export class BotEvents {
         if (msg.author.bot) return;
         if (!msg.content.startsWith(this._prefix)) return;
 
+        if(process.env.DEFAULT_CHANNELS.split(',').includes(msg.channel.id)) {
+            this._channel=msg.channel.id;
+        }
+
         if (msg.content.startsWith(`${this._prefix}id`)) { 
             this._channel = msg.content.slice(this._prefix.length).split(/ +/)[1];
             return;
-        }
-
-        if(process.env.DEFAULT_CHANNELS.split(',').includes(msg.channel.id)) {
-            this._channel=msg.channed.id;
         }
 
         if(!this._channel) {
